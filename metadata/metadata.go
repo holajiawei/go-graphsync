@@ -36,7 +36,7 @@ func DecodeMetadata(data []byte) (Metadata, error) {
 		if err != nil {
 			return nil, err
 		}
-		linkNode, err := item.LookupString("link")
+		linkNode, err := item.LookupByString("link")
 		if err != nil {
 			return nil, err
 		}
@@ -44,7 +44,7 @@ func DecodeMetadata(data []byte) (Metadata, error) {
 		if err != nil {
 			return nil, err
 		}
-		blockPresentNode, err := item.LookupString("blockPresent")
+		blockPresentNode, err := item.LookupByString("blockPresent")
 		if err != nil {
 			return nil, err
 		}
@@ -59,7 +59,7 @@ func DecodeMetadata(data []byte) (Metadata, error) {
 
 // EncodeMetadata encodes metadata to an IPLD node then serializes to raw bytes
 func EncodeMetadata(entries Metadata) ([]byte, error) {
-	node, err := fluent.Build(basicnode.Style.List, func(na fluent.NodeAssembler) {
+	node, err := fluent.Build(basicnode.Prototype.List, func(na fluent.NodeAssembler) {
 		na.CreateList(len(entries), func(na fluent.ListAssembler) {
 			for _, item := range entries {
 				na.AssembleValue().CreateMap(2, func(na fluent.MapAssembler) {
